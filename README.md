@@ -14,7 +14,7 @@
  效果图如下：
  <br><br>
 
-![截图](https://github.com/zhfei/RepositoryEffectPictures/blob/master/filt.png)
+![截图](https://github.com/zhfei/RepositoryEffectPictures/blob/master/filt1.png)
 <br><br>
  
 2.排序工具类
@@ -23,5 +23,5 @@
   然后，将工具类控制器添加到要添加的视图上。
   <br>
  效果图如下：
- ![截图](https://github.com/zhfei/RepositoryEffectPictures/blob/master/sort.png)
+ ![截图](https://github.com/zhfei/RepositoryEffectPictures/blob/master/sort1.png)
 <br><br>
