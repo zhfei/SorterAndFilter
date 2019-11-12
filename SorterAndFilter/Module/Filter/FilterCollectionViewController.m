@@ -73,9 +73,9 @@ static CGFloat const extraHeigh           = 0;//collectionView下面，格外增
     [super viewWillAppear:animated];
     
     CGRect frame =self.collectionView.frame;
-    frame.size.height=[self setCollectionViewHeightWithDataSource]+extraHeigh;
+    CGFloat filterH = [self setCollectionViewHeightWithDataSource]+extraHeigh;;
+    frame.size.height= filterH > 300?300:filterH;
     self.collectionView.frame=frame;
-    self.collectionView.contentSize = frame.size;
     
     self.view.backgroundColor = [UIColor clearColor];
 }
