@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		91809FC2237AF91A002EE427 /* ZHFilterBaseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 91809FC1237AF91A002EE427 /* ZHFilterBaseViewController.m */; };
+		91B530C3237AD78C00B7F90E /* ZHFilterTwoTableController.m in Sources */ = {isa = PBXBuildFile; fileRef = 91B530C2237AD78C00B7F90E /* ZHFilterTwoTableController.m */; };
+		91B530C5237AD8F200B7F90E /* ZHFilterTwoTableController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 91B530C4237AD8F200B7F90E /* ZHFilterTwoTableController.xib */; };
 		91EADFC71D536EAC001553BB /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 91EADFC61D536EAC001553BB /* main.m */; };
 		91EADFCA1D536EAC001553BB /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 91EADFC91D536EAC001553BB /* AppDelegate.m */; };
 		91EADFCD1D536EAC001553BB /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 91EADFCC1D536EAC001553BB /* ViewController.m */; };
@@ -36,6 +39,12 @@
 /* Begin PBXFileReference section */
 		10A55484F57DA855AB5683CA /* libPods-SorterAndFilter.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-SorterAndFilter.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		8D77679617A80DA6140A6CE7 /* Pods-SorterAndFilter.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SorterAndFilter.debug.xcconfig"; path = "Pods/Target Support Files/Pods-SorterAndFilter/Pods-SorterAndFilter.debug.xcconfig"; sourceTree = "<group>"; };
+		91809FC0237AF91A002EE427 /* ZHFilterBaseViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZHFilterBaseViewController.h; sourceTree = "<group>"; };
+		91809FC1237AF91A002EE427 /* ZHFilterBaseViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZHFilterBaseViewController.m; sourceTree = "<group>"; };
+		91B530BF237AD68500B7F90E /* ZHFilterProtocol.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZHFilterProtocol.h; sourceTree = "<group>"; };
+		91B530C1237AD78C00B7F90E /* ZHFilterTwoTableController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZHFilterTwoTableController.h; sourceTree = "<group>"; };
+		91B530C2237AD78C00B7F90E /* ZHFilterTwoTableController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZHFilterTwoTableController.m; sourceTree = "<group>"; };
+		91B530C4237AD8F200B7F90E /* ZHFilterTwoTableController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ZHFilterTwoTableController.xib; sourceTree = "<group>"; };
 		91EADFC21D536EAC001553BB /* SorterAndFilter.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SorterAndFilter.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		91EADFC61D536EAC001553BB /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		91EADFC81D536EAC001553BB /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -89,6 +98,16 @@
 				10A55484F57DA855AB5683CA /* libPods-SorterAndFilter.a */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		91B530C0237AD73700B7F90E /* TwoTableFilter */ = {
+			isa = PBXGroup;
+			children = (
+				91B530C1237AD78C00B7F90E /* ZHFilterTwoTableController.h */,
+				91B530C2237AD78C00B7F90E /* ZHFilterTwoTableController.m */,
+				91B530C4237AD8F200B7F90E /* ZHFilterTwoTableController.xib */,
+			);
+			path = TwoTableFilter;
 			sourceTree = "<group>";
 		};
 		91EADFB91D536EAC001553BB = {
@@ -158,8 +177,12 @@
 		91EADFEE1D537289001553BB /* Module */ = {
 			isa = PBXGroup;
 			children = (
+				91B530C0237AD73700B7F90E /* TwoTableFilter */,
 				91EADFEF1D5372DF001553BB /* Filter */,
 				91EADFF01D5372DF001553BB /* Sorter */,
+				91B530BF237AD68500B7F90E /* ZHFilterProtocol.h */,
+				91809FC0237AF91A002EE427 /* ZHFilterBaseViewController.h */,
+				91809FC1237AF91A002EE427 /* ZHFilterBaseViewController.m */,
 			);
 			path = Module;
 			sourceTree = "<group>";
@@ -289,6 +312,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				91EADFD51D536EAC001553BB /* LaunchScreen.storyboard in Resources */,
+				91B530C5237AD8F200B7F90E /* ZHFilterTwoTableController.xib in Resources */,
 				91EADFD21D536EAC001553BB /* Assets.xcassets in Resources */,
 				91EADFD01D536EAC001553BB /* Main.storyboard in Resources */,
 			);
@@ -357,9 +381,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				91EADFFE1D53733A001553BB /* SorterTableViewController.m in Sources */,
+				91B530C3237AD78C00B7F90E /* ZHFilterTwoTableController.m in Sources */,
 				91EADFCD1D536EAC001553BB /* ViewController.m in Sources */,
 				91EC75C11D538996006239F4 /* SpecHeader.m in Sources */,
 				91EADFCA1D536EAC001553BB /* AppDelegate.m in Sources */,
+				91809FC2237AF91A002EE427 /* ZHFilterBaseViewController.m in Sources */,
 				91EADFED1D536F61001553BB /* Utitly.m in Sources */,
 				91EC75BB1D53869D006239F4 /* LeftAlignedFlowLayout.m in Sources */,
 				91EADFF91D537323001553BB /* FilterCollectionViewController.m in Sources */,

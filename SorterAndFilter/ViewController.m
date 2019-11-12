@@ -9,6 +9,7 @@
 #import "ViewController.h"
 #import "SorterTableViewController.h"
 #import "FilterCollectionViewController.h"
+#import "ZHFilterTwoTableController.h"
 #import "Utitly.h"
 #import <Masonry.h>
 
@@ -16,9 +17,12 @@
 @property (strong,nonatomic)UIView *contentView;
 @property (strong,nonatomic) FilterCollectionViewController *filter;
 @property (strong,nonatomic) SorterTableViewController *sorter;
+@property (strong,nonatomic) ZHFilterTwoTableController *filterTwoTable;
 
-@property (strong,nonatomic) UIButton *leftBtn;
-@property (strong,nonatomic) UIButton *rightBtn;
+
+@property (strong,nonatomic) UIButton *tabBtn0;
+@property (strong,nonatomic) UIButton *tabBtn1;
+@property (strong,nonatomic) UIButton *tabBtn2;
 @property (strong,nonatomic) UIViewController *currentVC;
 @end
 
@@ -32,21 +36,26 @@
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
-    [Utitly addCustomLayerSinglePixLineWithRect:CGRectMake(CGRectGetMaxX(self.leftBtn.frame)-0.5, 0, 0.5, CGRectGetMaxY(self.leftBtn.frame)) toView:self.leftBtn];
-    [Utitly addBottomSinglePixLine:CGRectGetMaxX(self.leftBtn.frame) toView:self.leftBtn];
-    [Utitly addBottomSinglePixLine:CGRectGetMaxX(self.rightBtn.frame) toView:self.rightBtn];
+    [Utitly addCustomLayerSinglePixLineWithRect:CGRectMake(CGRectGetWidth(self.tabBtn0.frame)-0.5, 0, 0.5, CGRectGetMaxY(self.tabBtn0.frame)) toView:self.tabBtn0];
+    [Utitly addCustomLayerSinglePixLineWithRect:CGRectMake(CGRectGetWidth(self.tabBtn1.frame)-0.5, 0, 0.5, CGRectGetMaxY(self.tabBtn1.frame)) toView:self.tabBtn1];
+    [Utitly addBottomSinglePixLine:CGRectGetMaxX(self.tabBtn0.frame) toView:self.tabBtn0];
+    [Utitly addBottomSinglePixLine:CGRectGetMaxX(self.tabBtn1.frame) toView:self.tabBtn1];
+    [Utitly addBottomSinglePixLine:CGRectGetMaxX(self.tabBtn1.frame) toView:self.tabBtn2];
+
     
-    CGPoint targetP = [self.leftBtn convertPoint:CGPointMake(0, CGRectGetMaxY(self.leftBtn.frame)) toView:[UIApplication sharedApplication].keyWindow];
+    CGPoint targetP = [self.tabBtn0 convertPoint:CGPointMake(0, CGRectGetMaxY(self.tabBtn0.frame)) toView:[UIApplication sharedApplication].keyWindow];
     self.filter.viewBounds=CGRectMake(0, targetP.y, [Utitly KScreenW], [Utitly KScreenH]-targetP.y);
     [self.filter.view setFrame:self.filter.viewBounds];
     self.sorter.viewBounds=CGRectMake(0, targetP.y, [Utitly KScreenW], [Utitly KScreenH]-targetP.y);
     [self.sorter.view setFrame:self.sorter.viewBounds];
+    self.filterTwoTable.contentBounds=CGRectMake(0, targetP.y, [Utitly KScreenW], [Utitly KScreenH]-targetP.y);
+    [self.filterTwoTable.view setFrame:self.filterTwoTable.contentBounds];
     //点击事件
-    [self btnClick:self.leftBtn];
+    [self btnClick:self.tabBtn0];
 }
 
 - (void)addContentViews {
-    UIView *view =[UIView new];
+    UIView *view =[UIView new] ;
     view.backgroundColor = [UIColor blackColor];
     view.alpha = 0.5;
     [self.view addSubview:view];
@@ -72,13 +81,16 @@
         make.height.mas_equalTo(40);
     }];
     
-    self.leftBtn = [self createBtn:@"排序"];
-    _leftBtn.tag=100;
-    self.rightBtn = [self createBtn:@"筛选"];
-    _rightBtn.tag=101;
+    self.tabBtn0 = [self createBtn:@"排序"];
+    _tabBtn0.tag=100;
+    self.tabBtn1 = [self createBtn:@"筛选"];
+    _tabBtn1.tag=101;
+    self.tabBtn2 = [self createBtn:@"双列表"];
+    _tabBtn2.tag=102;
     
-    [stack addArrangedSubview:_leftBtn];
-    [stack addArrangedSubview:_rightBtn];
+    [stack addArrangedSubview:_tabBtn0];
+    [stack addArrangedSubview:_tabBtn1];
+    [stack addArrangedSubview:_tabBtn2];
 }
 
 - (UIButton *)createBtn:(NSString *)title {
@@ -105,26 +117,25 @@
 }
 
 - (void)btnClick:(UIButton *)btn {
-    if (btn==self.leftBtn) {
-        [self hideSelectingViewWithVC:self.filter];
+    [self hideSelectingViewWithVC:self.filter];
+    [self hideSelectingViewWithVC:self.sorter];
+    [self hideSelectingViewWithVC:self.filterTwoTable];
+    
+    self.tabBtn0.selected = NO;
+    self.tabBtn1.selected = NO;
+    self.tabBtn2.selected = NO;
+    
+    
+    if (btn == self.tabBtn0) {
         [self showSelectingViewWithVC:self.sorter];
-        
-        self.rightBtn.selected=NO;
-        self.leftBtn.selected=!self.leftBtn.selected;
-        
-        if (!self.leftBtn.selected) {
-            [self.sorter coverViewHide];
-        }
-    }else{
-        [self hideSelectingViewWithVC:self.sorter];
+        self.tabBtn0.selected = YES;
+
+    } else if (btn == self.tabBtn1) {
         [self showSelectingViewWithVC:self.filter];
-        
-        self.leftBtn.selected=NO;
-        self.rightBtn.selected=!self.rightBtn.selected;
-        
-        if (!self.rightBtn.selected) {
-            [self.filter coverViewHide];
-        }
+        self.tabBtn1.selected = YES;
+    } else if (btn == self.tabBtn2) {
+        [self showSelectingViewWithVC:self.filterTwoTable];
+        self.tabBtn2.selected = YES;
     }
 }
 
@@ -133,7 +144,7 @@
         __weak typeof(self)weakSelf=self;
         _filter = [[FilterCollectionViewController alloc]init];
         _filter.hideBlock=^{
-            weakSelf.rightBtn.selected = NO;
+            weakSelf.tabBtn1.selected = NO;
         };
     }
     return _filter;
@@ -144,10 +155,21 @@
         __weak typeof(self)weakSelf=self;
         _sorter = [[SorterTableViewController alloc]init];
         _sorter.hideBlock=^{
-            weakSelf.leftBtn.selected = NO;
+            weakSelf.tabBtn0.selected = NO;
         };
     }
     return _sorter;
+}
+
+- (ZHFilterTwoTableController *)filterTwoTable {
+    if (!_filterTwoTable) {
+        __weak typeof(self)weakSelf=self;
+        _filterTwoTable = [[ZHFilterTwoTableController alloc]init];
+        _filterTwoTable.hideBlock=^{
+            weakSelf.tabBtn2.selected = NO;
+        };
+    }
+    return _filterTwoTable;
 }
 
 @end
