@@ -64,6 +64,7 @@ static CGFloat const extraHeigh           = 0;//collectionView下面，格外增
     self.collectionView.delegate=self;
     self.collectionView.dataSource=self;
     [self.view addSubview:self.collectionView];
+    self.collectionView.backgroundColor = [UIColor whiteColor];
     
     
     UITapGestureRecognizer *tap =[[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(coverViewHide)];
@@ -85,8 +86,7 @@ static CGFloat const extraHeigh           = 0;//collectionView下面，格外增
     frame.size.height=[self setCollectionViewHeightWithDataSource]+extraHeigh;
     self.collectionView.frame=frame;
     
-    self.view.backgroundColor=[UIColor blackColor];
-    self.view.alpha=1;
+    self.view.backgroundColor = [UIColor clearColor];
 }
 
 #pragma mark 私有方法
@@ -105,7 +105,6 @@ static CGFloat const extraHeigh           = 0;//collectionView下面，格外增
     frame.size.height=0;
     [UIView animateWithDuration:0.3 animations:^{
         self.collectionView.frame=frame;
-        self.view.alpha=0.5;
         [self.collectionView layoutIfNeeded];
     } completion:^(BOOL finished) {
         [self.view removeFromSuperview];

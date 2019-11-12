@@ -30,6 +30,7 @@ const CGFloat rowHeigh=50.f;
     [self.view addSubview:self.tableView];
     self.tableView.delegate=self;
     self.tableView.dataSource=self;
+    self.tableView.backgroundColor = [UIColor whiteColor];
     
     UITapGestureRecognizer *tap =[[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(coverViewHide)];
     [self.view addGestureRecognizer:tap];
@@ -48,8 +49,7 @@ const CGFloat rowHeigh=50.f;
     frame.size.height=[self.dataSource count]*rowHeigh;
     self.tableView.frame=frame;
     
-    self.view.backgroundColor=[UIColor blackColor];
-    self.view.alpha=1;
+    self.view.backgroundColor=[UIColor clearColor];
 
 }
 
@@ -71,7 +71,6 @@ const CGFloat rowHeigh=50.f;
     frame.size.height=0;
     [UIView animateWithDuration:0.3 animations:^{
         self.tableView.frame=frame;
-        self.view.alpha=0.5;
     } completion:^(BOOL finished) {
         [self.view removeFromSuperview];
         [self removeFromParentViewController];
