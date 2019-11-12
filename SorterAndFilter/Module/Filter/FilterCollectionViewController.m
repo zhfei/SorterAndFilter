@@ -26,7 +26,7 @@ static CGFloat const extraHeigh           = 0;//collectionView下面，格外增
 
 
 @interface FilterCollectionViewController ()<UICollectionViewDelegateFlowLayout,UICollectionViewDelegate,UICollectionViewDataSource>
-@property (strong,nonatomic) NSArray     * dataSource;
+@property (strong,nonatomic) NSArray            * dataSource;
 @property (strong,nonatomic) UICollectionView   * collectionView;
 
 @end
@@ -46,15 +46,12 @@ static CGFloat const extraHeigh           = 0;//collectionView下面，格外增
     self.dataSource=@[section0,section1,section2];
     
     // Register cell classes
-    
     LeftAlignedFlowLayout *layout=[[LeftAlignedFlowLayout alloc ] init];
     [layout configLeftAlignedFlowLayoutWithLeftMargin:sectionLeftMargin ItemMargin:sectionMiddleMargin];
     [layout setItemSize:CGSizeMake(80, itemHeigh)];
     [layout setMinimumLineSpacing:sectionMiddleMargin];
     [layout setMinimumInteritemSpacing:sectionMiddleMargin];
     [layout setSectionInset:UIEdgeInsetsMake(sectionTopMargin, sectionLeftMargin,sectionBottomMargin, sectionLeftMargin)];
-    
-    
 
     self.collectionView =[[UICollectionView alloc] initWithFrame:CGRectMake(0, 0,[Utitly KScreenW] , 1) collectionViewLayout:layout];
     [self.collectionView registerClass:[SpecCollectionCell class] forCellWithReuseIdentifier:@"SpecCollectionCell"];
@@ -66,16 +63,9 @@ static CGFloat const extraHeigh           = 0;//collectionView下面，格外增
     [self.view addSubview:self.collectionView];
     self.collectionView.backgroundColor = [UIColor whiteColor];
     
-    
     UITapGestureRecognizer *tap =[[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(coverViewHide)];
     [self.view addGestureRecognizer:tap];
     
-    // Do any additional setup after loading the view.
-}
-
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -85,16 +75,14 @@ static CGFloat const extraHeigh           = 0;//collectionView下面，格外增
     CGRect frame =self.collectionView.frame;
     frame.size.height=[self setCollectionViewHeightWithDataSource]+extraHeigh;
     self.collectionView.frame=frame;
+    self.collectionView.contentSize = frame.size;
     
     self.view.backgroundColor = [UIColor clearColor];
 }
 
+
 #pragma mark 私有方法
-/*!
- *  @author zhoufei
- *
- *  @brief 隐藏视图
- */
+//隐藏视图
 - (void)coverViewHide
 {
     if (self.hideBlock) {
@@ -112,21 +100,12 @@ static CGFloat const extraHeigh           = 0;//collectionView下面，格外增
     }];
 }
 
-
-
-/*!
- *  @author zhoufei
- *
- *  @brief 根据数据源，计算colletionView的高度
- *
- *  @return colletionView的高度
- */
+//根据数据源，计算colletionView的高度
 - (CGFloat)setCollectionViewHeightWithDataSource
 {
     CGFloat totalHeigh=0;
     //组头总高度
     totalHeigh +=[self.dataSource count]*sectionHeaderHeigh;
-    
     
     for (NSDictionary *dict in self.dataSource) {
         NSArray *sectionDataArray= [[dict allValues] firstObject];
@@ -139,17 +118,7 @@ static CGFloat const extraHeigh           = 0;//collectionView下面，格外增
     return totalHeigh;
 }
 
-
-
-/*!
- *  @author zhoufei
- *
- *  @brief 计算一组选择的高度
- *
- *  @param textArray 字符串数组
- *
- *  @return 组高度
- */
+//计算一组选择的高度
 - (NSInteger)sectionHeighWithTextArray:(NSArray *)textArray
 {
     CGFloat totalWidth=self.viewBounds.size.width;
@@ -172,8 +141,6 @@ static CGFloat const extraHeigh           = 0;//collectionView下面，格外增
     }
     return rowNum;
 }
-
-
 
 #pragma mark --UICollectionView数据源
 //定义展示的UICollectionViewCell的个数
@@ -219,14 +186,11 @@ static CGFloat const extraHeigh           = 0;//collectionView下面，格外增
         [reuseView setHeaderTitle:[[dict allKeys] firstObject]];
         
         
-    }else if ([kind isEqualToString:UICollectionElementKindSectionFooter]){
+    } else if ([kind isEqualToString:UICollectionElementKindSectionFooter]){
         
     }
-    
     return reuseView;
-    
 }
-
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout referenceSizeForHeaderInSection:(NSInteger)section
 {
@@ -237,21 +201,16 @@ static CGFloat const extraHeigh           = 0;//collectionView下面，格外增
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath
 {
     NSArray *array=[[[self.dataSource objectAtIndex:indexPath.section] allValues] firstObject];
-    
-    
     return [Utitly calculateWidthWithHeihgt:40 Font:16 textString:[array objectAtIndex:indexPath.row] itemHeigh:itemHeigh];
 }
 
 
 #pragma mark <UICollectionViewDelegate>
-
-
 //返回这个UICollectionView是否可以被选择
 -(BOOL)collectionView:(UICollectionView *)collectionView shouldSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
     return YES;
 }
-
 //UICollectionView被选中时调用的方法
 -(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
