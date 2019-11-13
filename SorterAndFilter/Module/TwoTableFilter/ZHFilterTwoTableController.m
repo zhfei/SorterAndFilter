@@ -12,13 +12,15 @@
 static NSString *cellID =@"myCell";
 
 @interface ZHFilterTwoTableController ()<UITableViewDelegate, UITableViewDataSource>
-@property (nonatomic, strong) NSMutableArray *dataSource;
 @property (weak, nonatomic) IBOutlet UITableView *leftTable;
 @property (weak, nonatomic) IBOutlet UITableView *rightTable;
+@property (strong, nonatomic) NSArray *dataSource;
+
 @end
 
 
 @implementation ZHFilterTwoTableController
+@synthesize filterListSize,hideFilterListBlock,dataSource;
 #pragma mark - Life Cycle
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -37,15 +39,33 @@ static NSString *cellID =@"myCell";
 }
 
 #pragma mark - Getter, Setter
-- (NSMutableArray *)dataSource {
-    if (!_dataSource) {
-        _dataSource = @[@"1",@"2",@"3"].mutableCopy;
-    }
-    return _dataSource;
-}
+
 #pragma mark - Event
 
 #pragma mark - Public Method
+- (void)tapGrayCoverView {
+    if (self.hideFilterListBlock) {
+        self.hideFilterListBlock();
+    }
+    
+    CGRect lFrame =self.leftTable.frame;
+    lFrame.size.height=0;
+    CGRect rFrame =self.rightTable.frame;
+    rFrame.size.height=0;
+    [UIView animateWithDuration:0.3 animations:^{
+        self.leftTable.frame=lFrame;
+        self.rightTable.frame=rFrame;
+    } completion:^(BOOL finished) {
+        [self.view removeFromSuperview];
+        [self removeFromParentViewController];
+    }];
+}
+
+- (void)updateWithDataSource:(NSArray *)dataSource {
+    self.dataSource = dataSource;
+    
+    
+}
 
 #pragma mark - Private Method
 - (void)setupUI {
@@ -69,22 +89,6 @@ static NSString *cellID =@"myCell";
 
 - (void)setupData {
     
-}
-
-- (void)coverViewHide {
-    [super coverViewHide];
-    CGRect lFrame =self.leftTable.frame;
-    lFrame.size.height=0;
-    
-    CGRect rFrame =self.rightTable.frame;
-    rFrame.size.height=0;
-    [UIView animateWithDuration:0.3 animations:^{
-        self.leftTable.frame=lFrame;
-        self.rightTable.frame=rFrame;
-    } completion:^(BOOL finished) {
-        [self.view removeFromSuperview];
-        [self removeFromParentViewController];
-    }];
 }
 
 #pragma mark - Delegate
@@ -116,13 +120,19 @@ static NSString *cellID =@"myCell";
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellID forIndexPath:indexPath];
-    cell.textLabel.text = @"内容...";
+    cell.textLabel.text = self.dataSource[indexPath.row];
     
     return cell;
 }
 #pragma mark UITableViewDelegate
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    if (tableView == self.leftTable) {
+        [self.rightTable reloadData];
+    } else {
+        if ([self.delegate respondsToSelector:@selector(filterListVC:didSelectInFirstTable:secondTable:)]) {
+            [self.delegate filterListVC:self didSelectInFirstTable:[self.leftTable indexPathForSelectedRow] secondTable:[self.rightTable indexPathForSelectedRow]];
+        }
+    }
 }
 
 #pragma mark - NSCopying

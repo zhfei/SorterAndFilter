@@ -7,29 +7,35 @@
 //
 
 #import "ZHFilterBaseViewController.h"
+#import <Masonry/Masonry.h>
 
 @interface ZHFilterBaseViewController ()
 
 @end
 
 @implementation ZHFilterBaseViewController
-@synthesize contentBounds,hideBlock;
+
 #pragma mark - Life Cycle
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     self.view.backgroundColor = [UIColor clearColor];
     
-    UITapGestureRecognizer *tap =[[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(coverViewHide)];
-    [self.view addGestureRecognizer:tap];
+    UIView *gray = [UIView new];
+    gray.backgroundColor = [UIColor blackColor];
+    gray.alpha = 0.5;
+    [self.view insertSubview:gray atIndex:0];
+    [gray mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.edges.mas_equalTo(UIEdgeInsetsZero);
+    }];
+    
+    UITapGestureRecognizer *tap =[[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(tapGrayCoverView)];
+    [gray addGestureRecognizer:tap];
 }
 
 #pragma mark - Private Method
-//隐藏视图
-- (void)coverViewHide {
-    if (self.hideBlock) {
-        self.hideBlock();
-    }
+- (void)tapGrayCoverView {
+
 }
 
 #pragma mark - Public Method

@@ -7,10 +7,11 @@
 //
 
 #import "ZHFilterBaseViewController.h"
-
+#import "ZHFilterProtocol.h"
 NS_ASSUME_NONNULL_BEGIN
 
-@interface ZHFilterTwoTableController : ZHFilterBaseViewController
+@interface ZHFilterTwoTableController : ZHFilterBaseViewController <ZHFilterProtocol>
+@property (weak, nonatomic) id<ZHFilterDelegateProtocol> delegate;
 
 @end
 
