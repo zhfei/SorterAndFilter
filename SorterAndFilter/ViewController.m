@@ -15,7 +15,6 @@
 #import <Masonry.h>
 
 @interface ViewController () <ZHFilterDelegateProtocol>
-@property (strong,nonatomic)UIView *contentView;
 @property (strong,nonatomic) FilterCollectionViewController *filter;
 @property (strong,nonatomic) SorterTableViewController *sorter;
 @property (strong,nonatomic) ZHFilterTwoTableController *filterTwoTable;
@@ -34,7 +33,7 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
     //添加内容视图
-    [self addContentViews];
+    [self addStackViewContentViews];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -53,20 +52,6 @@
 }
 
 #pragma mark - Private Method
-- (void)addContentViews {
-    UIView *view =[UIView new] ;
-    view.backgroundColor = [UIColor blackColor];
-    view.alpha = 0.5;
-    [self.view addSubview:view];
-    [view mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.edges.mas_equalTo(UIEdgeInsetsMake(20, 0, 0, 0));
-    }];
-    self.contentView=view;
-    
-    [Utitly addTopSinglePixLine:[Utitly KScreenW] toView:view];
-    [self addStackViewContentViews];
-}
-
 - (void)addStackViewContentViews {
     [self.view addSubview:self.stack];
     [self.stack mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -74,7 +59,6 @@
         make.top.mas_equalTo(20);
         make.height.mas_equalTo(40);
     }];
-    
     self.tabBtn0 = [self createBtn:@"排序"];
     _tabBtn0.tag=100;
     self.tabBtn1 = [self createBtn:@"筛选"];
@@ -127,11 +111,9 @@
         [self hideSelectingViewWithVC:self.filter];
         [self hideSelectingViewWithVC:self.sorter];
         [self hideSelectingViewWithVC:self.filterTwoTable];
-        
         self.tabBtn0.selected = NO;
         self.tabBtn1.selected = NO;
         self.tabBtn2.selected = NO;
-        
         
         if (btn == self.tabBtn0) {
             [self showSelectingViewWithVC:self.sorter];
