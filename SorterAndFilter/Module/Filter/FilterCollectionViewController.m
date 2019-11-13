@@ -32,7 +32,7 @@ static CGFloat const extraHeigh           = 0;//collectionView下面，格外增
 @end
 
 @implementation FilterCollectionViewController
-
+@synthesize filterListSize,hideFilterListBlock;
 #pragma mark 生命周期
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -63,9 +63,6 @@ static CGFloat const extraHeigh           = 0;//collectionView下面，格外增
     [self.view addSubview:self.collectionView];
     self.collectionView.backgroundColor = [UIColor whiteColor];
     
-    UITapGestureRecognizer *tap =[[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(coverViewHide)];
-    [self.view addGestureRecognizer:tap];
-    
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -82,11 +79,9 @@ static CGFloat const extraHeigh           = 0;//collectionView下面，格外增
 
 
 #pragma mark 私有方法
-//隐藏视图
-- (void)coverViewHide
-{
-    if (self.hideBlock) {
-        self.hideBlock();
+- (void)tapGrayCoverView {
+    if (self.hideFilterListBlock) {
+        self.hideFilterListBlock();
     }
     
     CGRect frame =self.collectionView.frame;
@@ -121,7 +116,7 @@ static CGFloat const extraHeigh           = 0;//collectionView下面，格外增
 //计算一组选择的高度
 - (NSInteger)sectionHeighWithTextArray:(NSArray *)textArray
 {
-    CGFloat totalWidth=self.viewBounds.size.width;
+    CGFloat totalWidth=self.view.frame.size.width;
     NSInteger rowNum=1;
     CGFloat currentWidth=sectionLeftMargin;
     

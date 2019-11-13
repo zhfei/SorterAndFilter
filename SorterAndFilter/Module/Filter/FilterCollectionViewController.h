@@ -6,18 +6,9 @@
 //  Copyright © 2016年 zhoufei. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
+#import "ZHFilterBaseViewController.h"
+#import "ZHFilterProtocol.h"
 
-@interface FilterCollectionViewController : UIViewController
-//当前view的viewBounds
-@property (assign,nonatomic) CGRect      viewBounds;
-//蒙板点击block
-@property (copy,nonatomic)void(^hideBlock)();
+@interface FilterCollectionViewController : ZHFilterBaseViewController <ZHFilterProtocol>
 
-/*!
- *  @author zhoufei
- *
- *  @brief 隐藏视图
- */
-- (void)coverViewHide;
 @end

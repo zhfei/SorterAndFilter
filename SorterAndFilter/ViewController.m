@@ -46,9 +46,7 @@
     
     CGPoint targetP = [self.tabBtn0 convertPoint:CGPointMake(0, CGRectGetMaxY(self.tabBtn0.frame)) toView:[UIApplication sharedApplication].keyWindow];
     CGRect viewBounds = CGRectMake(0, targetP.y, [Utitly KScreenW], [Utitly KScreenH]-targetP.y);
-    self.filter.viewBounds = viewBounds;
     [self.filter.view setFrame:viewBounds];
-    self.sorter.viewBounds = viewBounds;
     [self.sorter.view setFrame:viewBounds];
     [self.filterTwoTable.view setFrame:viewBounds];
     [self.filterTwoTable updateWithDataSource:@[@"1",@"1",@"1"]];
@@ -159,7 +157,7 @@
     if (!_filter) {
         __weak typeof(self)weakSelf=self;
         _filter = [[FilterCollectionViewController alloc]init];
-        _filter.hideBlock=^{
+        _filter.hideFilterListBlock=^{
             weakSelf.tabBtn1.selected = NO;
         };
     }
@@ -170,7 +168,7 @@
     if (!_sorter) {
         __weak typeof(self)weakSelf=self;
         _sorter = [[SorterTableViewController alloc]init];
-        _sorter.hideBlock=^{
+        _sorter.hideFilterListBlock=^{
             weakSelf.tabBtn0.selected = NO;
         };
     }

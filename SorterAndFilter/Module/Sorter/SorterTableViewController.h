@@ -6,17 +6,9 @@
 //  Copyright © 2016年 zhoufei. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
+#import "ZHFilterBaseViewController.h"
+#import "ZHFilterProtocol.h"
 
-@interface SorterTableViewController : UIViewController
-@property (assign,nonatomic) CGRect      viewBounds;
-//蒙板点击block
-@property (copy,nonatomic)void(^hideBlock)();
+@interface SorterTableViewController : ZHFilterBaseViewController <ZHFilterProtocol>
 
-/*!
- *  @author zhoufei
- *
- *  @brief 隐藏视图
- */
-- (void)coverViewHide;
 @end

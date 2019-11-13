@@ -20,7 +20,7 @@ static NSString *cellID =@"myCell";
 
 
 @implementation ZHFilterTwoTableController
-@synthesize filterListSize,hideFilterListBlock,dataSource;
+@synthesize filterListSize,hideFilterListBlock;
 #pragma mark - Life Cycle
 - (void)viewDidLoad {
     [super viewDidLoad];

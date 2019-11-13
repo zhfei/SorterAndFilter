@@ -19,21 +19,20 @@ const CGFloat rowHeigh=50.f;
 @end
 
 @implementation SorterTableViewController
+@synthesize filterListSize,hideFilterListBlock;
 #pragma mark 生命周期
 - (void)viewDidLoad {
     [super viewDidLoad];
     
     
     self.dataSource=@[@"离我最近",@"距离由远到近",@"距离由近到远"];
-    self.tableView=[[UITableView alloc]initWithFrame:CGRectMake(0, 0, self.viewBounds.size.width, 1) style:UITableViewStylePlain];
+    self.tableView=[[UITableView alloc]initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 1) style:UITableViewStylePlain];
     [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"UITableViewCell"];
     [self.view addSubview:self.tableView];
     self.tableView.delegate=self;
     self.tableView.dataSource=self;
     self.tableView.backgroundColor = [UIColor whiteColor];
-    
-    UITapGestureRecognizer *tap =[[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(coverViewHide)];
-    [self.view addGestureRecognizer:tap];
+
 }
 
 - (void)didReceiveMemoryWarning {
@@ -54,17 +53,9 @@ const CGFloat rowHeigh=50.f;
 }
 
 #pragma mark 私有方法
-
-
-/*!
- *  @author zhoufei
- *
- *  @brief 隐藏视图
- */
-- (void)coverViewHide
-{
-    if (self.hideBlock) {
-        self.hideBlock();
+- (void)tapGrayCoverView {
+    if (self.hideFilterListBlock) {
+        self.hideFilterListBlock();
     }
     
     CGRect frame =self.tableView.frame;
